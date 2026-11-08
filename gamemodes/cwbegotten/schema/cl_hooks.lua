@@ -4333,6 +4333,10 @@ netstream.Hook("NPCSpawnESPInfo", function(data)
 	end
 end);
 
+netstream.Hook("WarhornOrDeathWhistleSound", function(speaker, wdwSound, wdwPitch)
+	speaker:EmitSound(wdwSound, 100, wdwPitch)
+end)
+
 -- Save data icon in top right.
 local pentaFade;
 local pentaAlpha = 0;

@@ -866,6 +866,8 @@ local ITEM = Clockwork.item:New();
 			
 				if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Holy Hierarchy" then
 					if (name == "Sound Attack") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -875,11 +877,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn3.mp3", 100, math.random(98, 102));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/warhorn3.mp3", math.random(98, 102));
 					elseif (name == "Sound Rally") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -889,11 +895,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn7.mp3", 100, math.random(98, 102));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/warhorn7.mp3", math.random(98, 102));
 					elseif (name == "Sound Rally - Marching Formation") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -903,11 +913,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn8.mp3", 100, math.random(98, 102));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/warhorn8.mp3", math.random(98, 102));
 					elseif (name == "Sound Rally - Shieldwall") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -917,11 +931,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn4.mp3", 100, math.random(98, 102));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/warhorn4.mp3", math.random(98, 102));
 					elseif (name == "Sound Retreat") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -931,13 +949,17 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn6.mp3", 100, math.random(98, 102));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/warhorn6.mp3", math.random(98, 102));
 					end;
 				elseif faction == "Goreic Warrior" then
 					if (name == "Sound Attack") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -947,11 +969,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/gore_warhorn_attack.mp3", 100, math.random(88, 108));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/gore_warhorn_attack.mp3", math.random(88, 108));
 					elseif (name == "Sound Rally") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -961,11 +987,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/gore_warhorn_rally.mp3", 100, math.random(88, 108));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/gore_warhorn_rally.mp3", math.random(88, 108));
 					elseif (name == "Sound Rally - Marching Formation") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -975,11 +1005,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/gore_warhorn_formation.mp3", 100, math.random(95, 118));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/gore_warhorn_formation.mp3", math.random(95, 118));
 					elseif (name == "Sound Rally - Shieldwall") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -989,11 +1023,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/gore_warhorn_formation.mp3", 100, math.random(77, 86));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/gore_warhorn_formation.mp3", math.random(77, 86));
 					elseif (name == "Sound Retreat") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -1003,10 +1041,12 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
 						
-						player:EmitSound("warhorns/gore_warhorn_retreat.mp3", 100, math.random(88, 108));
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/gore_warhorn_retreat.mp3", math.random(88, 108));
 					end;
  
 				else
@@ -1054,6 +1094,8 @@ local ITEM = Clockwork.item:New();
 				
 				if faction == "Children of Satan" then
 					if (name == "Sound Attack") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -1062,10 +1104,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds a terrifying death whistle!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
-						player:EmitSound("warhorns/deathwhistle"..math.random(1,2)..".mp3", 100, math.random(98, 102));
+
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/deathwhistle"..math.random(1,2)..".mp3", math.random(98, 102));
 					elseif (name == "Sound Rally") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -1075,10 +1122,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds a terrifying death whistle!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
-						player:EmitSound("warhorns/deathwhistle5.mp3", 100, math.random(98, 102));
+
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/deathwhistle5.mp3", math.random(98, 102));
 					elseif (name == "Sound Rally - Marching Formation") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -1088,10 +1140,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds a terrifying death whistle!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
-						player:EmitSound("warhorns/deathwhistle5.mp3", 100, math.random(98, 102));
+
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/deathwhistle5.mp3", math.random(98, 102));
 					elseif (name == "Sound Rally - Shieldwall") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -1101,10 +1158,15 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds a terrifying death whistle!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
-						player:EmitSound("warhorns/deathwhistle5.mp3", 100, math.random(98, 102));
+
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/deathwhistle5.mp3", math.random(98, 102));
 					elseif (name == "Sound Retreat") then
+						local listeners = {};
+
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
@@ -1113,9 +1175,12 @@ local ITEM = Clockwork.item:New();
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds a terrifying death whistle!");
 								end
+
+								listeners[#listeners + 1] = v;
 							end
 						end
-						player:EmitSound("warhorns/deathwhistle"..math.random(3,4)..".mp3", 100, math.random(98, 102));
+
+						netstream.Start(listeners, "WarhornOrDeathWhistleSound", player, "warhorns/deathwhistle"..math.random(3,4)..".mp3", math.random(98, 102));
 					end;
 				else
 					Schema:EasyText(player, "peru", "You are not the correct faction to do this!");
