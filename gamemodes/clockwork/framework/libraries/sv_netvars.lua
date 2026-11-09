@@ -68,25 +68,22 @@ function netvars.AreEqual(old, new)
 end
 
 function playerMeta:SyncVars()
+	local syncTable = {}
+
 	for entity, data in pairs(stored) do
 		if (IsValid(entity)) then
-			for k, v in pairs(data) do
-				--netstream.Start(self, "nVar", entity:EntIndex(), k, v)
-				net.Start("nVar")
-					net.WriteUInt(entity:EntIndex(), 14);
-					net.WriteString(k)
-					net.WriteType(v)
-				net.Send(self)
-			end
+			--netstream.Start(self, "nVar", entity:EntIndex(), k, v)
+			syncTable[entity:EntIndex()] = data
 		end
 	end
 
-	for k, v in pairs(globals) do
-		--netstream.Start(self, "gVar", k, v)
-		net.Start("gVar")
-			net.WriteString(k)
-			net.WriteType(v)
-		net.Send(self)
+	--netstream.Start(self, "gVar", k, v)
+	if (next(syncTable) ~= nil) then
+		netstream.Heavy(self, "nVarsSync", syncTable)
+	end
+
+	if (next(globals) ~= nil) then
+		netstream.Heavy(self, "gVarsSync", globals)
 	end
 end
 

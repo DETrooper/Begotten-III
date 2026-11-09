@@ -189,6 +189,9 @@ function cwWeather:PlayerCharacterInitialized(player)
 end
 
 function cwWeather:ItemEntityThink(entity, itemTable)
+	local curTime = CurTime();
+	if (entity.nextAcidCheck and curTime < entity.nextAcidCheck) then return; end;
+	entity.nextAcidCheck = curTime + 2.0; -- 2s throttle
 	if self.weather == "acidrain" then
 		local entPos = entity:GetPos() + Vector(0, 0, 4);
 		

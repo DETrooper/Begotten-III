@@ -9,7 +9,7 @@
 function cwGore:HUDPaintEntityTargetID(entity, info)
 	local class = entity:GetClass();
 	
-	if (class == "prop_physics") then
+	if (class == "prop_physics" or class == "class C_PhysPropClientside") then
 		if (entity:GetModel() == "models/gibs/hgibs.mdl") then
 			info.y = Clockwork.kernel:DrawInfo("A human skull.", info.x, info.y, Clockwork.option:GetColor("target_id"), info.alpha);
 		end;
@@ -86,6 +86,88 @@ function cwGore:Think()
 		end
 	end
 end
+
+cwGore.ClientGibs = cwGore.ClientGibs or {};
+cwGore.ClientGibIndex = cwGore.ClientGibIndex or 0;
+
+local defaultGibModels = {
+	"models/props_junk/watermelon01_chunk02a.mdl",
+	"models/props_junk/watermelon01_chunk02b.mdl",
+	"models/props_junk/watermelon01_chunk02c.mdl",
+	"models/gibs/antlion_gib_medium_1.mdl",
+	"models/gibs/antlion_gib_small_1.mdl",
+	"models/gibs/antlion_gib_small_2.mdl"
+};
+
+net.Receive("cwCreateClientGibs", function()
+	local pos = net.ReadVector();
+	local count = net.ReadUInt(5);
+	local isSkull = net.ReadBool();
+	local fadeDelay = net.ReadUInt(6);
+	local dmgForce = net.ReadVector();
+
+	for i = 1, count do
+		local model = isSkull and "models/gibs/hgibs.mdl" or defaultGibModels[math.random(1, #defaultGibModels)];
+		local gib = ents.CreateClientProp(model);
+
+		if (IsValid(gib)) then
+			gib:SetPos(pos + Vector(math.random(-20, 20), math.random(-20, 20), math.random(10, 35)));
+			gib:SetAngles(AngleRand());
+			
+			if (!isSkull) then
+				gib:SetMaterial("models/flesh");
+			end;
+			
+			gib:SetCollisionGroup(COLLISION_GROUP_DEBRIS);
+			gib:Spawn();
+			gib:Activate();
+
+			local phys = gib:GetPhysicsObject();
+			if (IsValid(phys)) then
+				phys:Wake();
+				local vel;
+				if (dmgForce and dmgForce:LengthSqr() > 100) then
+					vel = (dmgForce * math.Rand(0.08, 0.15)) + VectorRand() * 40;
+				else
+					vel = Vector(
+						math.random(-180, 180),
+						math.random(-180, 180),
+						math.random(200, 450)
+					);
+				end;
+				phys:SetVelocity(vel);
+				phys:AddAngleVelocity(VectorRand() * 500);
+			end;
+
+			-- Ring buffer management (max 64 active gibs)
+			cwGore.ClientGibIndex = (cwGore.ClientGibIndex % 64) + 1;
+			local oldGib = cwGore.ClientGibs[cwGore.ClientGibIndex];
+			if (IsValid(oldGib)) then
+				oldGib:Remove();
+			end;
+			cwGore.ClientGibs[cwGore.ClientGibIndex] = gib;
+
+			timer.Simple(fadeDelay, function()
+				if (IsValid(gib)) then
+					gib:Remove();
+				end;
+			end);
+		end;
+	end;
+end);
+
+net.Receive("cwClearClientGibs", function()
+	if (cwGore.ClientGibs) then
+		for i = 1, 64 do
+			local gib = cwGore.ClientGibs[i];
+			if (IsValid(gib)) then
+				gib:Remove();
+			end;
+		end;
+		cwGore.ClientGibs = {};
+		cwGore.ClientGibIndex = 0;
+	end;
+end);
 
 --[[
 

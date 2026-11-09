@@ -1429,15 +1429,21 @@ function Schema:Tick()
 	local curTime = CurTime();
 	
 	-- This should stop people from loweirng their FPS to make lockpicking easier, at least w/o external programs.
+	-- Guard concommand spam every tick; only re-apply if actively altered
+	local cv_3dsky = GetConVar("r_3dsky")
+	if cv_3dsky and cv_3dsky:GetInt() ~= 1 then
+		RunConsoleCommand("r_3dsky", "1")
+	end
+
 	if !self.nextFPSCheck or curTime >= self.nextFPSCheck then
-		self.nextFPSCheck = curTime + 0.05;
-		
+		self.nextFPSCheck = curTime + 1.0;
 		--RunConsoleCommand("fps_max", "300");
 		--RunConsoleCommand("hud_draw_fixed_reticle", "0");
-		RunConsoleCommand("mat_motion_blur_enabled", "1");
+		local cv_blur = GetConVar("mat_motion_blur_enabled")
+		if cv_blur and cv_blur:GetInt() ~= 1 then
+			RunConsoleCommand("mat_motion_blur_enabled", "1")
+		end
 	end
-	
-	RunConsoleCommand("r_3dsky", "1");
 	--RunConsoleCommand("r_pixelfog", "1");
 	--RunConsoleCommand("mat_monitorgamma_tv_enabled", "0");
 
@@ -1456,15 +1462,12 @@ function Schema:Tick()
 			end
 		end
 		
-		for k, v in pairs(ents.GetAll()) do
-			if string.find(v:GetClass(), "class C_BaseFlex") and v:GetModel() then
-				if IsValid(v) and IsValid(Clockwork.Client) and v:GetPos() == Vector(0, 0, 0) then
-					if v:GetModel() == Clockwork.Client:GetModel() or v.noDelete then
-						continue;
-					end
-					
-					v:Remove();
+		for _, v in ipairs(ents.FindByClass("class C_BaseFlex")) do
+			if v:GetModel() and IsValid(v) and IsValid(Clockwork.Client) and v:GetPos() == Vector(0, 0, 0) then
+				if v:GetModel() == Clockwork.Client:GetModel() or v.noDelete then
+					continue;
 				end
+				v:Remove();
 			end
 		end
 		
