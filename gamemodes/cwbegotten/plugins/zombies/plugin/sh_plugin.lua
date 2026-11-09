@@ -40,9 +40,14 @@ cwZombies.npcSpawnAmounts = {
 
 cwZombies.terrorNPCs = cwZombies.zombieNPCS;
 
+cwZombies.zombieNPCSet = {};
+for _, class in ipairs(cwZombies.zombieNPCS) do
+	cwZombies.zombieNPCSet[class] = true;
+end;
+
 local entityMeta = FindMetaTable("Entity");
 
 -- A function to get if an entity is a zombie.
 function entityMeta:IsZombie()
-	return table.HasValue(cwZombies.zombieNPCS, self:GetClass());
+	return cwZombies.zombieNPCSet[self:GetClass()] == true;
 end;

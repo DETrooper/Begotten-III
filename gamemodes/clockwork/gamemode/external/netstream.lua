@@ -25,21 +25,13 @@ netstream.cache = cache
 
 -- A function to split data for a data stream.
 function netstream.Split(data)
-	local index = 1
 	local result = {}
-	local buffer = {}
+	local len = string.len(data)
+	local chunkSize = 32768
 
-	for i = 0, string.len(data) do
-		buffer[#buffer + 1] = string.sub(data, i, i)
-
-		if (#buffer == 32768) then
-			result[#result + 1] = table.concat(buffer)
-				index = index + 1
-			buffer = {}
-		end
+	for i = 1, len, chunkSize do
+		result[#result + 1] = string.sub(data, i, math.min(i + chunkSize - 1, len))
 	end
-
-	result[#result + 1] = table.concat(buffer)
 
 	return result
 end

@@ -40,17 +40,41 @@ function cwLantern:Think()
 			reqDistance = (zones.currentFogEnd * zones.currentFogEnd);
 		end;
 
+		local candidates = {};
+
 		for _, v in _player.Iterator() do
-			if (v:Alive()) then
-				local activeWeapon = v:GetActiveWeapon();
-				
-				if (activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern") or v:GetNetVar("lanternOnHip") then
-					local position = v:GetPos();
-					
-					if (position:DistToSqr(clientPosition) <= reqDistance) then
-						self.lanternPlayers[v] = true;
+			if (v:Alive() and not v:IsDormant() and not v:GetNetVar("hidden")) then
+				local hasLantern = v:GetNetVar("lanternOnHip");
+				if not hasLantern then
+					local isRaised, activeWeapon = v:IsWeaponRaised();
+					if isRaised and activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern" then
+						hasLantern = true;
 					end;
 				end;
+				
+				if hasLantern and (v:GetNetVar("oil", 0) > 0) then
+					local position = v:GetPos();
+					local distSq = position:DistToSqr(clientPosition);
+					
+					if (distSq <= reqDistance) then
+						if (v == Clockwork.Client) then
+							self.lanternPlayers[v] = true;
+						else
+							candidates[#candidates + 1] = {ply = v, distSq = distSq};
+						end;
+					end;
+				end;
+			end;
+		end;
+
+		if (#candidates > 5) then
+			table.sort(candidates, function(a, b) return a.distSq < b.distSq end);
+			for i = 1, 5 do
+				self.lanternPlayers[candidates[i].ply] = true;
+			end;
+		else
+			for i = 1, #candidates do
+				self.lanternPlayers[candidates[i].ply] = true;
 			end;
 		end;
 	end;

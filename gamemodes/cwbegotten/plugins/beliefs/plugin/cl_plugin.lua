@@ -1,3 +1,4 @@
+cwBeliefs.matCache = cwBeliefs.matCache or {};
 --[[
 	Begotten 3
 	Created by cash wednesday, gabs, DETrooper and alyousha35
@@ -27,7 +28,10 @@ function cwBeliefs:DrawTreeBackground(x, y, width, height, panel)
 	end;
 
 	surface.SetDrawColor(255, 255, 255, panel.alpha);
-	surface.SetMaterial(Material(material));
+	if not cwBeliefs.matCache[material] then
+		cwBeliefs.matCache[material] = Material(material);
+	end;
+	surface.SetMaterial(cwBeliefs.matCache[material]);
 	surface.DrawTexturedRect(x, y, width, height);
 end;
 

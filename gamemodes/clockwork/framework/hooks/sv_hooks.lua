@@ -1725,7 +1725,11 @@ function GM:OneSecond()
 		Clockwork.NextSaveData = sysTime + config.Get("save_data_interval"):Get()
 	elseif (!Clockwork.NextSaveItemIDs or sysTime >= Clockwork.NextSaveItemIDs) then
 		-- This is too important not to save every few seconds, otherwise items can spawn with the item IDs of existing items and that's no good!
-		Clockwork.kernel:SaveSchemaData("itemIndex", {ITEM_INDEX});
+		-- Dirty-track ITEM_INDEX to avoid synchronous disk I/O every 5s when no items spawned
+		if (Clockwork.lastSavedItemIndex ~= ITEM_INDEX) then
+			Clockwork.kernel:SaveSchemaData("itemIndex", {ITEM_INDEX});
+			Clockwork.lastSavedItemIndex = ITEM_INDEX;
+		end
 		
 		Clockwork.NextSaveItemIDs = sysTime + 5;
 	end
@@ -1745,52 +1749,82 @@ function GM:OneSecond()
 end
 
 do
-	local cwNextThink = 0
-	local cwNextSecond = 0
-	local cwNextHalfSecond = 0;
 	cwThinkRate = 0.2;
 
 	-- Called each tick.
+	-- Interleaved player time-slicing to eliminate 128-player thundering herd tick spikes.
 	function GM:Tick()
 		local curTime = CurTime()
 
-		if (curTime >= cwNextThink) then
-			for _, player in _player.Iterator() do
-				local initialized = player:HasInitialized();
+		for _, player in _player.Iterator() do
+			local plyTab = player:GetTable()
+			local nextThink = plyTab.cwNextThink
 
-				if (initialized) then
-					local alive = player:Alive();
-					local plyTab = player:GetTable();
-					local infoTable = plyTab.cwInfoTable;
+			if not nextThink then
+				local entIdx = player:EntIndex()
+				plyTab.cwNextThink = curTime + ((entIdx % 10) * 0.02)
+				plyTab.cwNextHalfSecond = curTime + cwThinkRate + ((entIdx % 25) * 0.02)
+				plyTab.cwNextSecond = curTime + cwThinkRate + ((entIdx % 50) * 0.02)
+			else
+				local entIdx = player:EntIndex()
+				local initialized = player:HasInitialized()
+				local alive, infoTable
 
-					infoTable.crouchedSpeed = plyTab.cwCrouchedSpeed
-					infoTable.jumpPower = plyTab.cwJumpPower
-					infoTable.walkSpeed = plyTab.cwWalkSpeed
-					infoTable.isRunning = player:IsRunning()
-					infoTable.isJumping = player:IsJumping()
-					infoTable.runSpeed = plyTab.cwRunSpeed
-					infoTable.waterLevel = player:WaterLevel();
-
-					hook.Run("PlayerThink", player, curTime, infoTable, alive, initialized, plyTab)
-
-					if (curTime >= cwNextSecond) then
-						hook.Run("OnePlayerSecond", player, curTime, infoTable, alive, initialized, plyTab)
+				if curTime >= nextThink then
+					local nextTarget = nextThink + cwThinkRate
+					if (curTime >= nextTarget) then
+						plyTab.cwNextThink = curTime + cwThinkRate + ((entIdx % 10) * 0.02)
+					else
+						plyTab.cwNextThink = nextTarget
 					end
-					
-					if (curTime >= cwNextHalfSecond) then
+
+					if (initialized) then
+						alive = player:Alive()
+						infoTable = plyTab.cwInfoTable
+
+						if (infoTable) then
+							infoTable.crouchedSpeed = plyTab.cwCrouchedSpeed
+							infoTable.jumpPower = plyTab.cwJumpPower
+							infoTable.walkSpeed = plyTab.cwWalkSpeed
+							infoTable.isRunning = player:IsRunning()
+							infoTable.isJumping = player:IsJumping()
+							infoTable.runSpeed = plyTab.cwRunSpeed
+							infoTable.waterLevel = player:WaterLevel()
+						end
+
+						hook.Run("PlayerThink", player, curTime, infoTable, alive, initialized, plyTab)
+					end
+				end
+
+				if (curTime >= (plyTab.cwNextHalfSecond or 0)) then
+					local nextHalf = (plyTab.cwNextHalfSecond or curTime) + 0.5
+					if (curTime >= nextHalf) then
+						plyTab.cwNextHalfSecond = curTime + 0.5 + ((entIdx % 25) * 0.02)
+					else
+						plyTab.cwNextHalfSecond = nextHalf
+					end
+
+					if (initialized) then
+						if alive == nil then alive = player:Alive() end
+						if infoTable == nil then infoTable = plyTab.cwInfoTable end
 						hook.Run("OnePlayerHalfSecond", player, curTime, infoTable, alive, initialized, plyTab)
 					end
 				end
-			end
 
-			cwNextThink = curTime + cwThinkRate
+				if (curTime >= (plyTab.cwNextSecond or 0)) then
+					local nextSec = (plyTab.cwNextSecond or curTime) + 1
+					if (curTime >= nextSec) then
+						plyTab.cwNextSecond = curTime + 1 + ((entIdx % 50) * 0.02)
+					else
+						plyTab.cwNextSecond = nextSec
+					end
 
-			if (curTime >= cwNextSecond) then
-				cwNextSecond = curTime + 1
-			end
-			
-			if (curTime >= cwNextHalfSecond) then
-				cwNextHalfSecond = curTime + 0.5
+					if (initialized) then
+						if alive == nil then alive = player:Alive() end
+						if infoTable == nil then infoTable = plyTab.cwInfoTable end
+						hook.Run("OnePlayerSecond", player, curTime, infoTable, alive, initialized, plyTab)
+					end
+				end
 			end
 		end
 	end
@@ -2120,9 +2154,16 @@ function GM:PlayerUnragdolled(player, state, ragdoll)
 end
 
 -- Called to check if a player does have a flag.
+local defaultFlagsCfg
 function GM:PlayerDoesHaveFlag(player, flag)
-	if (string.find(config.Get("default_flags"):Get(), flag)) then
-		return true
+	if (!defaultFlagsCfg) then
+		defaultFlagsCfg = config.Get("default_flags")
+	end
+	if (defaultFlagsCfg) then
+		local def = defaultFlagsCfg:Get()
+		if (def and #def > 0 and string.find(def, flag, 1, true)) then
+			return true
+		end
 	end
 end
 
@@ -4501,15 +4542,15 @@ function GM:RunModifyPlayerSpeed(player, infoTable, bIgnoreDelay)
 
 		hook.Run("ModifyPlayerSpeed", player, infoTable, action);
 		
-		player:SetWalkSpeed(math.max(infoTable.walkSpeed, 1));
-		player:SetCrouchedWalkSpeed(math.max(infoTable.crouchedWalkSpeed, 1));
-		player:SetJumpPower(math.max(infoTable.jumpPower, 1));
-		
-		if (player:KeyDown(IN_BACK)) then
-			player:SetRunSpeed(infoTable.walkSpeed);
-		else
-			player:SetRunSpeed(infoTable.runSpeed);
-		end;
+		local targetWalk = math.max(infoTable.walkSpeed, 1);
+		local targetCrouched = math.max(infoTable.crouchedWalkSpeed, 1);
+		local targetJump = math.max(infoTable.jumpPower, 1);
+		local targetRun = (player:KeyDown(IN_BACK)) and targetWalk or math.max(infoTable.runSpeed, 1);
+
+		if (player:GetWalkSpeed() ~= targetWalk) then player:SetWalkSpeed(targetWalk); end
+		if (player:GetCrouchedWalkSpeed() ~= targetCrouched) then player:SetCrouchedWalkSpeed(targetCrouched); end
+		if (player:GetJumpPower() ~= targetJump) then player:SetJumpPower(targetJump); end
+		if (player:GetRunSpeed() ~= targetRun) then player:SetRunSpeed(targetRun); end
 		
 		player.speedSetCooldown = curTime + 0.1;
 	end;

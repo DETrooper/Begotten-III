@@ -33,33 +33,13 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 				corpse:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 			end;
 
-			local headEnt = ents.Create("prop_physics");
-				headEnt:SetModel("models/gibs/hgibs.mdl");
-				headEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 40)));
-				headEnt:SetCollisionGroup(COLLISION_GROUP_WORLD);
-			headEnt:Spawn();
-			
-			timer.Simple(fadeDelay / 2, function()
-				if (IsValid(headEnt)) then
-					headEnt:Remove();
-				end;
-			end);
-			
-			local headObject = headEnt:GetPhysicsObject();
-			
-			if (IsValid(headObject)) then
-				headObject:ApplyForceCenter(dmgForce);
-			end;
-			
-			cwMedicalSystem:DoBleedEffect(headEnt, true);
-			
-			for i = 1, math.random(2, 6) do 
-				headEnt:EmitSound("physics/flesh/flesh_squishy_impact_hard"..math.random(1, 4)..".wav");
-			end;
-			
-			timer.Simple(2, function()
-				cwMedicalSystem:DoBleedEffect(headEnt, true);
-			end)
+			-- Offload visual skull gib to client-side prop
+			local corpsePlayer = Clockwork.entity:GetPlayer(corpse);
+			local skullPos = corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 40));
+			local splatPos = corpse:GetPos() + Vector(0, 0, 24);
+
+			-- Offload visual skull gib to client-side prop
+			self:CreateGibs(skullPos, 1, dmgForce, {"models/gibs/hgibs.mdl"}, fadeDelay / 2, corpsePlayer);
 
 			local torsoEnt = ents.Create("prop_ragdoll");
 				torsoEnt:SetModel("models/skeleton/skeleton_torso2.mdl");
@@ -156,34 +136,10 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 				cwMedicalSystem:DoBleedEffect(leftArmEnt, true);
 			end)
 			
-			for i = 1, math.random(10, 14) do 
-				local gibEnt = ents.Create("prop_physics");
-					gibEnt:SetModel(table.Random(gibModels));
-					gibEnt:SetMaterial("models/flesh");
-					gibEnt:SetPos(corpse:GetPos() + Vector(math.random(0, 20), math.random(0, 20), math.random(0, 20)));
-					gibEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
-					gibEnt:SetHealth(10000);
-				gibEnt:Spawn();
-				
-				timer.Simple(2, function()
-					cwMedicalSystem:DoBleedEffect(gibEnt, true);
-				end)
-
-				local gibObject = gibEnt:GetPhysicsObject();
-				
-				if (IsValid(gibObject)) then
-					gibObject:ApplyForceCenter(dmgForce);
-				end;
-				
-				timer.Simple(fadeDelay / 2, function()
-					if (IsValid(gibEnt)) then
-						gibEnt:Remove();
-					end;
-				end);
-			end;
+			-- Offload visual debris gibs to client-side props
+			self:CreateGibs(splatPos, math.random(10, 14), dmgForce, gibModels, fadeDelay / 2, corpsePlayer);
 			
 			local entList = {
-				headEnt,
 				torsoEnt,
 				rightArmEnt,
 				leftArmEnt,
@@ -279,11 +235,8 @@ function cwGore:RotCorpse(entity, delay)
 
 				timer.Create("CorpseDecay_"..tostring(corpse:EntIndex()), timeRemove, 1, function()
 					if (IsValid(corpse)) then
-						local headEnt = ents.Create("prop_physics");
-							headEnt:SetModel("models/gibs/hgibs.mdl");
-							headEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 40)));
-							headEnt:SetCollisionGroup(COLLISION_GROUP_WORLD);
-						headEnt:Spawn();
+						local headPos = corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 40));
+						cwGore:CreateGibs(headPos, 1, Vector(0, 0, 0), {"models/gibs/hgibs.mdl"}, 60);
 						
 						local torsoEnt = ents.Create("prop_ragdoll");
 							torsoEnt:SetModel("models/skeleton/skeleton_torso2.mdl");
@@ -321,7 +274,6 @@ function cwGore:RotCorpse(entity, delay)
 						leftArmEnt:Spawn();
 						
 						local entList = {
-							headEnt,
 							torsoEnt,
 							rightArmEnt,
 							leftArmEnt,

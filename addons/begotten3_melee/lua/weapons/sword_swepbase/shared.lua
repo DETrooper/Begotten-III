@@ -413,19 +413,19 @@ function SWEP:Think()
 		-- Last ditch effort to fix the clientside itemtable desync.
 		if !self.nextItemSend or self.nextItemSend <= curTime then
 			if IsValid(player) and player:IsPlayer() then
-				local itemTable = item.GetByWeapon(self);
+				local itemTable = self.cwItemTable or item.GetByWeapon(self);
 					
 				if itemTable then
+					self.cwItemTable = itemTable;
+
+					if self:GetNWInt("ItemID") ~= itemTable.itemID then
+						self:SetNWInt("ItemID", itemTable.itemID);
+					end
+
 					netstream.Start(player, "WeaponItemData", {
 						definition = item.GetDefinition(itemTable, true),
 						weapon = self:EntIndex()
 					})
-
-					if self:GetNWInt("ItemID") ~= itemTable.itemID then
-						self:SetNWInt("ItemID", itemTable.itemID)
-					end
-					
-					self.cwItemTable = itemTable
 				end
 			end
 			
@@ -795,7 +795,7 @@ function SWEP:PrimaryAttack()
 					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
 						if !owner:GetNetVar("ParrySuccess", false) and !owner:GetNetVar("Guardening", false) then
 							self:Hitscan(); -- For bullet holes.
-							owner:LagCompensation(true);
+							if not owner:IsBot() then owner:LagCompensation(true); end
 						
 							local pos = owner:GetShootPos();
 							local aimVector = owner:GetAimVector();
@@ -999,7 +999,7 @@ function SWEP:PrimaryAttack()
 								end
 							end
 							
-							owner:LagCompensation(false);
+							if not owner:IsBot() then owner:LagCompensation(false); end
 						end
 						
 						if (owner:KeyDown(IN_ATTACK2)) then

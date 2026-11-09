@@ -145,7 +145,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 		local isCOS = (localPlayer:GetFaction() == "Children of Satan");
 		
 		for _, v in _player.Iterator() do
-			if v ~= localPlayer and v:HasInitialized() and v:Alive() and v:GetColor().a > 0 then
+			if v ~= localPlayer and not v:IsDormant() and v:HasInitialized() and v:Alive() and v:GetColor().a > 0 then
 				if isCOS or hasDarkness then
 					if v:GetNetVar("yellowBanner") then
 						if (v:GetPos():DistToSqr(playerPos) <= bannerDist) then

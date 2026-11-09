@@ -11,6 +11,8 @@ cwMedicalSystem.bleedDamageThresholds = {
 	[DMG_VEHICLE] = 10, -- stab
 };
 
+local MEDICAL_DAMAGE_TYPES = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_CLUB, DMG_SLASH, DMG_VEHICLE};
+
 -- Called when a player's character has loaded.
 function cwMedicalSystem:PlayerCharacterLoaded(player)
 	player.nextDiseaseCheck = CurTime() + math.random(120, 180);
@@ -678,13 +680,12 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 		
 		--local damageType = damageInfo:GetDamageType();
 		local damageType;
-		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_CLUB, DMG_SLASH, DMG_VEHICLE};
 		local damage = damageInfo:GetDamage();
 		local helmetItem = player:GetHelmetEquipped();
 		
-		for i = 1, #damageTypes do
-			if damageInfo:IsDamageType(damageTypes[i]) then
-				damageType = damageTypes[i];
+		for i = 1, #MEDICAL_DAMAGE_TYPES do
+			if damageInfo:IsDamageType(MEDICAL_DAMAGE_TYPES[i]) then
+				damageType = MEDICAL_DAMAGE_TYPES[i];
 				break;
 			end
 		end
