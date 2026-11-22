@@ -1577,7 +1577,7 @@ function playerMeta:GetCash()
 end
 
 -- A function to get a character's flags.
-function playerMeta:GetFlags() return self:QueryCharacter("Flags") end
+function playerMeta:GetFlags() return self:QueryCharacter("Flags") or "" end
 
 -- A function to get a player's faction.
 function playerMeta:GetFaction() return self:QueryCharacter("Faction") end

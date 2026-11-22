@@ -72,6 +72,8 @@ function cwStamina:PlayerShouldStaminaDrain(player)
 	--return true;
 end;
 
+local staminaDrainTab = {decrease = -2};
+
 -- Called at an interval while a player is connected.
 function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	--[[if (!self.regenScale or !self.regenScaleCooldown or self.regenScaleCooldown < curTime) then
@@ -115,12 +117,12 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			
 			if (!Clockwork.player:HasFlags(player, "E")) then
 				if (infoTable.isRunning) or (!onGround and infoTable.waterLevel >= 1 and !plyTab.drownedKingActive) then
-					local drainTab = {decrease = -2};
+					staminaDrainTab.decrease = -2;
 
 					if (hook.Run("PlayerShouldStaminaDrain", player) != false) then
-						hook.Run("ModifyStaminaDrain", player, drainTab);
+						hook.Run("ModifyStaminaDrain", player, staminaDrainTab);
 						
-						player:HandleStamina(drainTab.decrease);
+						player:HandleStamina(staminaDrainTab.decrease);
 						
 						return;
 					else

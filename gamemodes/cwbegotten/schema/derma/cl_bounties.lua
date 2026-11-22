@@ -297,11 +297,7 @@ function PANEL:DisplayWantedPoster(bountyData, charKey)
 			local clothesModel;
 			
 			if clothes and clothes.group then
-				if clothes.genderless then
-					clothesModel = "models/begotten/"..clothes.group..".mdl";
-				else
-					clothesModel = "models/begotten/"..clothes.group.."_"..string.lower(bountyData.gender or GENDER_MALE)..".mdl"
-				end
+				clothesModel = Clockwork.item:GetClothesModel(clothes, bountyData.gender or GENDER_MALE);
 			else
 				local faction = bountyData.faction;
 				

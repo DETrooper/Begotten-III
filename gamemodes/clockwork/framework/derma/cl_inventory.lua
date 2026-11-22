@@ -159,11 +159,7 @@ function PANEL:Rebuild()
 		end
 
 		if clothesItem and clothesItem.group then
-			if clothesItem.genderless then
-				playerModel = "models/begotten/"..clothesItem.group..".mdl";
-			else
-				playerModel = "models/begotten/"..clothesItem.group.."_"..string.lower(gender)..".mdl";
-			end
+			playerModel = Clockwork.item:GetClothesModel(clothesItem, gender);
 		elseif factionTable then
 			playerModel = factionTable.models[gender].clothes;
 		

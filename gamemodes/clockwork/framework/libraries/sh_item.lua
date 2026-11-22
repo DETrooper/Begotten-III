@@ -49,7 +49,8 @@ end
 --]]
 
 --[[ Set the __index meta function of the class. --]]
-local CLASS_TABLE = {__index = CLASS_TABLE};
+local CLASS_TABLE = {};
+CLASS_TABLE.__index = CLASS_TABLE;
 
 CLASS_TABLE.name = "Item Base";
 CLASS_TABLE.skin = 0;
@@ -1135,6 +1136,64 @@ function item.FindByID(identifier)
 		
 		return itemTable;
 	end;
+end;
+
+-- A function to resolve a valid clothes model with automatic fallbacks for missing gender variants.
+local validModelCache = {};
+function item.IsValidModelCached(modelPath)
+	if not modelPath or type(modelPath) ~= "string" then return false end;
+	local cached = validModelCache[modelPath];
+	if cached ~= nil then return cached end;
+	local isValid = util.IsValidModel(modelPath);
+	validModelCache[modelPath] = isValid;
+	return isValid;
+end;
+local IsValidModelCached = item.IsValidModelCached;
+
+function item.GetClothesModel(clothesItem, gender)
+	if not (clothesItem and clothesItem.group) then return nil end;
+
+	local model;
+	if clothesItem.genderless then
+		model = "models/begotten/"..clothesItem.group..".mdl";
+	else
+		local targetGender = string.lower(gender or "male");
+		model = "models/begotten/"..clothesItem.group.."_"..targetGender..".mdl";
+	end;
+
+	if not IsValidModelCached(model) then
+		local maleFallback = "models/begotten/"..clothesItem.group.."_male.mdl";
+		if IsValidModelCached(maleFallback) then
+			return maleFallback;
+		end;
+		local genderlessFallback = "models/begotten/"..clothesItem.group..".mdl";
+		if IsValidModelCached(genderlessFallback) then
+			return genderlessFallback;
+		end;
+		return (string.lower(gender or "") == "female" and IsValidModelCached("models/begotten/wanderers/wanderer_female.mdl"))
+			and "models/begotten/wanderers/wanderer_female.mdl"
+			or "models/begotten/wanderers/wanderer_male.mdl";
+	end;
+
+	return model;
+end;
+
+if Clockwork and Clockwork.item then
+	function Clockwork.item:GetClothesModel(clothesItem, gender)
+		if self ~= Clockwork.item and not gender then
+			gender = clothesItem;
+			clothesItem = self;
+		end;
+		return item.GetClothesModel(clothesItem, gender);
+	end;
+	Clockwork.item.GetClothesModel = Clockwork.item.GetClothesModel;
+	function Clockwork.item:IsValidModelCached(modelPath)
+		if self ~= Clockwork.item and not modelPath then
+			modelPath = self;
+		end;
+		return item.IsValidModelCached(modelPath);
+	end;
+	Clockwork.item.IsValidModelCached = Clockwork.item.IsValidModelCached;
 end;
 
 -- A function to merge an item with a base item.

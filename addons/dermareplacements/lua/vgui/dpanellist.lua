@@ -117,6 +117,7 @@ function PANEL:GetCanvas()
 end
 
 function PANEL:Clear( bDelete )
+	if ( bDelete == nil ) then bDelete = true end
 
 	for k, panel in pairs( self.Items ) do
 

@@ -1,3 +1,51 @@
+local validModelCache = {};
+local function IsValidModelCached(mdl)
+	if not mdl then return false end;
+	if validModelCache[mdl] == nil then
+		validModelCache[mdl] = util.IsValidModel(mdl);
+	end;
+	return validModelCache[mdl];
+end;
+
+local function GetClothesModel(clothes, gender)
+	if not (clothes and clothes.group) then return nil end;
+
+	local model;
+	if clothes.genderless then
+		model = "models/begotten/"..clothes.group..".mdl";
+	else
+		local targetGender = string.lower(gender or "male");
+		model = "models/begotten/"..clothes.group.."_"..targetGender..".mdl";
+	end;
+
+	if not IsValidModelCached(model) then
+		local maleFallback = "models/begotten/"..clothes.group.."_male.mdl";
+		if IsValidModelCached(maleFallback) then
+			return maleFallback;
+		end;
+		local genderlessFallback = "models/begotten/"..clothes.group..".mdl";
+		if IsValidModelCached(genderlessFallback) then
+			return genderlessFallback;
+		end;
+		return (string.lower(gender or "") == "female" and IsValidModelCached("models/begotten/wanderers/wanderer_female.mdl"))
+			and "models/begotten/wanderers/wanderer_female.mdl"
+			or "models/begotten/wanderers/wanderer_male.mdl";
+	end;
+
+	return model;
+end;
+
+if Clockwork and Clockwork.item then
+	function Clockwork.item:GetClothesModel(clothes, gender)
+		if self ~= Clockwork.item and not gender then
+			gender = clothes;
+			clothes = self;
+		end;
+		return GetClothesModel(clothes, gender);
+	end;
+	Clockwork.item.GetClothesModel = Clockwork.item.GetClothesModel;
+end;
+
 local overlay;
 
 function PLUGIN:GetProgressBarInfoAction(action, percentage)
@@ -51,7 +99,19 @@ function PLUGIN:Tick()
 		
 		if !v:IsDormant() and string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
 			local vTab = v:GetTable();
-			local model = v:GetNW2String("clothes") or "models/begotten/wanderers/wanderer_male.mdl";
+			local model = v:GetNW2String("clothes");
+			if not model or model == "" or not IsValidModelCached(model) then
+				if model and string.find(model, "_female%.mdl$") then
+					local maleMdl = string.gsub(model, "_female%.mdl$", "_male.mdl");
+					if IsValidModelCached(maleMdl) then
+						model = maleMdl;
+					else
+						model = "models/begotten/wanderers/wanderer_male.mdl";
+					end;
+				else
+					model = "models/begotten/wanderers/wanderer_male.mdl";
+				end;
+			end;
 			
 			if IsValid(clothesEnt) and clothesEnt:GetModel() ~= model then
 				clothesEnt:Remove();
@@ -71,19 +131,22 @@ function PLUGIN:Tick()
 					vTab.clothesEnt = clothesEnt;
 				end
 			else
-				if clothesEnt:GetModel() ~= v:GetNW2String("clothes") then
+				if clothesEnt:GetModel() ~= model then
 					clothesEnt:Remove();
-					vTab.clothesEnt = ClientsideModel(v:GetNW2String("clothes"), RENDERGROUP_BOTH);
+					vTab.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
+					clothesEnt = vTab.clothesEnt;
 				end
 			
-				if clothesEnt:GetParent() ~= v then
-					clothesEnt:SetParent(v);
-					clothesEnt:AddEffects(EF_BONEMERGE);
+				if IsValid(clothesEnt) then
+					if clothesEnt:GetParent() ~= v then
+						clothesEnt:SetParent(v);
+						clothesEnt:AddEffects(EF_BONEMERGE);
+					end
+					
+					clothesEnt:SetColor(v:GetColor());
+					clothesEnt:SetNoDraw(v:GetNoDraw());
+					clothesEnt:SetPos(v:GetPos());
 				end
-				
-				clothesEnt:SetColor(v:GetColor());
-				clothesEnt:SetNoDraw(v:GetNoDraw());
-				clothesEnt:SetPos(v:GetPos());
 			end
 		elseif clothesEnt then
 			if IsValid(clothesEnt) then
@@ -97,19 +160,16 @@ end
 
 function PLUGIN:PostPlayerDraw(player, flags)
 	if string.sub(player:GetModel(), 1, 21) == "models/begotten/heads" then
-		local plyColor = player:GetColor();
-	
-		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and plyColor.a > 0 and !player:GetNoDraw() then
-			local plyTab = player:GetTable();
+		if not player:Alive() or player:GetMoveType() == MOVETYPE_OBSERVER or player:GetNoDraw() then return end
+		local alpha = (player.GetColor4Part and select(4, player:GetColor4Part())) or player:GetColor().a;
+		if alpha <= 0 then return end
+
+		local plyTab = player:GetTable();
 			local clothes = player:GetClothesEquipped();
 			local model;
 
 			if clothes and clothes.group then
-				if clothes.genderless then
-					model = "models/begotten/"..clothes.group..".mdl";
-				else
-					model = "models/begotten/"..clothes.group.."_"..string.lower(player:GetGender())..".mdl"
-				end
+				model = GetClothesModel(clothes, player:GetGender());
 			else
 				local faction = player:GetFaction();
 				
@@ -130,20 +190,38 @@ function PLUGIN:PostPlayerDraw(player, flags)
 						if subfaction and factionTable.subfactions then
 							for i, v in ipairs(factionTable.subfactions) do
 								if v.name == subfaction and v.models then
-									model = v.models[string.lower(player:GetGender())].clothes;
-								
-									break;
+									local gModels = v.models[string.lower(player:GetGender())];
+									if gModels then
+										model = gModels.clothes;
+										break;
+									end;
 								end
 							end
 						end
 						
-						if !model then
-							model = factionTable.models[string.lower(player:GetGender())].clothes;
+						if !model and factionTable.models then
+							local gModels = factionTable.models[string.lower(player:GetGender())];
+							if gModels then
+								model = gModels.clothes;
+							end;
 						end
 					end
 				end
 			end
 			
+			if not model or not IsValidModelCached(model) then
+				if model and string.find(model, "_female%.mdl$") then
+					local maleMdl = string.gsub(model, "_female%.mdl$", "_male.mdl");
+					if IsValidModelCached(maleMdl) then
+						model = maleMdl;
+					else
+						model = "models/begotten/wanderers/wanderer_male.mdl";
+					end;
+				else
+					model = "models/begotten/wanderers/wanderer_male.mdl";
+				end;
+			end;
+
 			local clothesEnt = plyTab.clothesEnt;
 			
 			if IsValid(clothesEnt) and clothesEnt:GetModel() ~= model then
@@ -176,11 +254,14 @@ function PLUGIN:PostPlayerDraw(player, flags)
 				clothesEnt:AddEffects(EF_BONEMERGE);
 			end
 
-			clothesEnt:SetColor(plyColor);
+			if clothesEnt:GetSkin() ~= player:GetSkin() then
+				clothesEnt:SetSkin(player:GetSkin());
+			end
+
+			clothesEnt:SetColor(player:GetColor());
 
 			plyTab.clothesDrawnThisTick = true;
 		end
-	end
 end
 
 function PLUGIN:Think()
@@ -421,7 +502,7 @@ end]]--
 function PLUGIN:EntityRemoved(entity, bFullUpdate)
 	if bFullUpdate then return end;
 
-	if IsValid(entity) and entity:IsPlayer() or entity:GetClass() == "prop_ragdoll" then
+	if IsValid(entity) and (entity:IsPlayer() or entity:GetClass() == "prop_ragdoll") then
 		if IsValid(entity.clothesEnt) then
 			entity.clothesEnt:Remove();
 		end

@@ -116,24 +116,12 @@ function cwGore:FuckMyLife(player, damageInfo)
 				end);
 			end
 		else]]if (math.random(1, 2) == 2) then
-			local gibEntity = ents.Create("prop_physics");
-			
-			if (math.random(1, 2) == 2) then
-				gibEntity:SetModel("models/props_junk/watermelon01_chunk02b.mdl");
-			else
-				gibEntity:SetModel("models/props_junk/watermelon01_chunk02a.mdl");
+			local damagePos = damageInfo:GetDamagePosition();
+			if (!damagePos or damagePos:IsZero()) then
+				damagePos = player:GetPos() + Vector(0, 0, 40);
 			end;
-			
-			gibEntity:SetPos(damageInfo:GetDamagePosition());
-			gibEntity:Spawn();
-			gibEntity:SetMaterial("models/flesh");
-			gibEntity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-			
-			timer.Simple(math.random(8, 16), function()
-				if (IsValid(gibEntity)) then
-					gibEntity:Remove();
-				end;
-			end)
+			local model = (math.random(1, 2) == 2) and "models/props_junk/watermelon01_chunk02b.mdl" or "models/props_junk/watermelon01_chunk02a.mdl";
+			self:CreateGibs(damagePos, 1, damageInfo:GetDamageForce() * 0.1, {model}, math.random(8, 16), player);
 		end;
 		
 		player:EmitSound("physics/body/body_medium_break"..math.random(2, 3)..".wav");
@@ -150,6 +138,35 @@ function Schema:EntityRemoved(entity)
 		end
 	end
 end
+util.AddNetworkString("cwCreateClientGibs");
+util.AddNetworkString("cwClearClientGibs");
+
+-- A function to create an amount of gibs at a position (offloaded to client-side props).
+function cwGore:CreateGibs(position, count, damageForce, models, fadeDelay, victim)
+	local gibCount = math.Clamp(count or 4, 1, 16);
+	local gibFade = math.Clamp(fadeDelay or 15, 1, 60);
+	local isSkull = (models and models[1] == "models/gibs/hgibs.mdl") and true or false;
+	local force = damageForce or Vector(0, 0, 0);
+
+	local nearbyPlayers = {};
+	local maxDistSqr = 16777216; -- 4096^2
+	for _, v in _player.Iterator() do
+		if (v == victim or v:GetPos():DistToSqr(position) <= maxDistSqr) then
+			nearbyPlayers[#nearbyPlayers + 1] = v;
+		end;
+	end;
+
+	if (#nearbyPlayers > 0) then
+		net.Start("cwCreateClientGibs");
+		net.WriteVector(position);
+		net.WriteUInt(gibCount, 5);
+		net.WriteBool(isSkull);
+		net.WriteUInt(gibFade, 6);
+		net.WriteVector(force);
+		net.Send(nearbyPlayers);
+	end;
+end;
+
 --GORE
 
 --[[

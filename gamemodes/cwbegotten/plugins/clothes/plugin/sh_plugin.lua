@@ -7,6 +7,56 @@
 
 local PLUGIN = PLUGIN;
 
+local validModelCache = {};
+local function IsValidModelCached(mdl)
+	if not mdl then return false end;
+	if validModelCache[mdl] == nil then
+		validModelCache[mdl] = util.IsValidModel(mdl);
+	end;
+	return validModelCache[mdl];
+end;
+
+function PLUGIN:GetClothesModel(clothes, gender)
+	if not (clothes and clothes.group) then return nil end;
+
+	local model;
+	if clothes.genderless then
+		model = "models/begotten/"..clothes.group..".mdl";
+	else
+		local targetGender = string.lower(gender or "male");
+		model = "models/begotten/"..clothes.group.."_"..targetGender..".mdl";
+	end;
+
+	if not IsValidModelCached(model) then
+		local maleFallback = "models/begotten/"..clothes.group.."_male.mdl";
+		if IsValidModelCached(maleFallback) then
+			return maleFallback;
+		end;
+		local genderlessFallback = "models/begotten/"..clothes.group..".mdl";
+		if IsValidModelCached(genderlessFallback) then
+			return genderlessFallback;
+		end;
+		return (string.lower(gender or "") == "female" and IsValidModelCached("models/begotten/wanderers/wanderer_female.mdl"))
+			and "models/begotten/wanderers/wanderer_female.mdl"
+			or "models/begotten/wanderers/wanderer_male.mdl";
+	end;
+
+	return model;
+end;
+
+if Clockwork and Clockwork.item then
+	function Clockwork.item:GetClothesModel(clothes, gender)
+		if self ~= Clockwork.item and not gender then
+			gender = clothes;
+			clothes = self;
+		end;
+		return PLUGIN:GetClothesModel(clothes, gender);
+	end;
+	Clockwork.item.GetClothesModel = Clockwork.item.GetClothesModel;
+end;
+
+cwClothes = PLUGIN;
+
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua")
 Clockwork.kernel:IncludePrefixed("sv_plugin.lua")
 

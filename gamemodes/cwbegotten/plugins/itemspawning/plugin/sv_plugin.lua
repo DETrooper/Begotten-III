@@ -120,8 +120,8 @@ end;
 -- A function to get whether a position is clear of players and other items.
 function cwItemSpawner:IsAreaClear(position, bContainer)
 	--if (!bContainer) then
-		for k, v in pairs (ents.FindInSphere(position, 512)) do
-			if (v:IsPlayer()) then
+		for _, v in _player.Iterator() do
+			if (v:GetPos():DistToSqr(position) <= 262144) then
 				--print("Returning false for position: "..tostring(position));
 				--print("Player found is: "..v:Name());
 				return false;

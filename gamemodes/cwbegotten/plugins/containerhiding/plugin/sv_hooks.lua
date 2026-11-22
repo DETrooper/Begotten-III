@@ -101,21 +101,21 @@ end;
 
 -- Called at an interval while the player is connected to the server.
 function cwContainerHiding:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if (!plyTab.hideEntity) then return; end;
+
 	if (!plyTab.containerSound) then
 		plyTab.containerSound = curTime + math.random(8, 16); 
 	elseif (curTime > plyTab.containerSound) then
-		if (plyTab.hideEntity) then
-			local entity = plyTab.hideEntity;
-			local physObj = entity:GetPhysicsObject();
+		local entity = plyTab.hideEntity;
+		local physObj = entity:GetPhysicsObject();
+		
+		if (IsValid(physObj)) then
+			local material = physObj:GetMaterial();
 			
-			if (IsValid(physObj)) then
-				local material = physObj:GetMaterial();
-				
-				if (string.find(material, "wood")) then
-					entity:EmitSound("physics/wood/wood_crate_impact_soft"..math.random(1, 3)..".wav", 55);
-				elseif (string.find(material, "metal")) then
-					entity:EmitSound("physics/metal/metal_box_impact_soft"..math.random(1, 3)..".wav", 55);
-				end;
+			if (string.find(material, "wood")) then
+				entity:EmitSound("physics/wood/wood_crate_impact_soft"..math.random(1, 3)..".wav", 55);
+			elseif (string.find(material, "metal")) then
+				entity:EmitSound("physics/metal/metal_box_impact_soft"..math.random(1, 3)..".wav", 55);
 			end;
 		end;
 		

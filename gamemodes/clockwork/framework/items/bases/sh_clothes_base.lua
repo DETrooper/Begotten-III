@@ -16,6 +16,11 @@ local ITEM = item.New(nil, true);
 	ITEM.slots = {"Armor"};
 	ITEM.equipmentSaveString = "clothes";
 
+	-- Called when the item's clothes model is needed.
+	function ITEM:GetModel(gender)
+		return Clockwork.item:GetClothesModel(self, gender);
+	end;
+
 	-- Called when the item's client side model is needed.
 	function ITEM:GetClientSideModel(modelName, genderOverride)
 		local replacement = nil
@@ -53,14 +58,7 @@ local ITEM = item.New(nil, true);
 				local ragdollEntity = player:GetRagdollEntity();
 				
 				if IsValid(ragdollEntity) and player:Alive() then
-					local model;
-					
-					if self.genderless then
-						model = "models/begotten/"..self.group..".mdl";
-					else
-						model = "models/begotten/"..self.group.."_"..string.lower(player:GetGender())..".mdl";
-					end
-					
+					local model = Clockwork.item:GetClothesModel(self, player:GetGender());
 					ragdollEntity:SetNW2String("clothes", model);
 				end
 			end
@@ -407,7 +405,7 @@ local ITEM = item.New(nil, true);
 					end
 				end
 
-				if !bSkipProgressBar then
+				if !bSkipProgressBar and not player:IsBot() then
 					local weightNum = 1;
 					
 					if self.weightclass == "Medium" then

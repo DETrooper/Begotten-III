@@ -65,6 +65,21 @@ net.Receive("gVar", function()
 	globals[key] = value
 end)
 
+netstream.Hook("nVarsSync", function(batch)
+	for index, data in pairs(batch) do
+		stored[index] = stored[index] or {}
+		for k, v in pairs(data) do
+			stored[index][k] = v
+		end
+	end
+end)
+
+netstream.Hook("gVarsSync", function(vars)
+	for k, v in pairs(vars) do
+		globals[k] = v
+	end
+end)
+
 function netvars.GetNetVar(key, default)
 	local value = globals[key]
 

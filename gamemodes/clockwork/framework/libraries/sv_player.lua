@@ -1231,13 +1231,22 @@ function Clockwork.player:GiveSpawnItemWeapon(player, itemTable)
 	end
 end
 
+-- A function to check if a player has initialized their character.
+function Clockwork.player:HasInitialized(player)
+	return IsValid(player) and player:HasInitialized()
+end
+
 -- A function to give flags to a character.
 function Clockwork.player:GiveFlags(player, flags)
+	if (!IsValid(player) or !player:HasInitialized()) then return end
+
+	local curFlags = player:GetFlags() or ""
 	for i = 1, #flags do
 		local flag = string.utf8sub(flags, i, i)
 
-		if (!string.find(player:GetFlags(), flag)) then
-			player:SetCharacterData("Flags", player:GetFlags()..flag, true)
+		if (!string.find(curFlags, flag, 1, true)) then
+			curFlags = curFlags..flag
+			player:SetCharacterData("Flags", curFlags, true)
 
 			hook.Run("PlayerFlagsGiven", player, flag)
 		end
@@ -1246,11 +1255,13 @@ end
 
 -- A function to give flags to a player.
 function Clockwork.player:GivePlayerFlags(player, flags)
+	local curFlags = player:GetPlayerFlags() or ""
 	for i = 1, #flags do
 		local flag = string.utf8sub(flags, i, i)
 
-		if (!string.find(player:GetPlayerFlags(), flag)) then
-			player:SetData("Flags", player:GetPlayerFlags()..flag, true)
+		if (!string.find(curFlags, flag, 1, true)) then
+			curFlags = curFlags..flag
+			player:SetData("Flags", curFlags, true)
 
 			hook.Run("PlayerFlagsGiven", player, flag)
 		end
@@ -1408,11 +1419,15 @@ end
 
 -- A function to take flags from a character.
 function Clockwork.player:TakeFlags(player, flags)
+	if (!IsValid(player) or !player:HasInitialized()) then return end
+
+	local curFlags = player:GetFlags() or ""
 	for i = 1, #flags do
 		local flag = string.utf8sub(flags, i, i)
 
-		if (string.find(player:GetFlags(), flag)) then
-			player:SetCharacterData("Flags", string.gsub(player:GetFlags(), flag, ""), true)
+		if (string.find(curFlags, flag, 1, true)) then
+			curFlags = string.gsub(curFlags, flag, "")
+			player:SetCharacterData("Flags", curFlags, true)
 
 			hook.Run("PlayerFlagsTaken", player, flag)
 		end
@@ -1421,11 +1436,13 @@ end
 
 -- A function to take flags from a player.
 function Clockwork.player:TakePlayerFlags(player, flags)
+	local curFlags = player:GetPlayerFlags() or ""
 	for i = 1, #flags do
 		local flag = string.utf8sub(flags, i, i)
 
-		if (string.find(player:GetPlayerFlags(), flag)) then
-			player:SetData("Flags", string.gsub(player:GetFlags(), flag, ""), true)
+		if (string.find(curFlags, flag, 1, true)) then
+			curFlags = string.gsub(curFlags, flag, "")
+			player:SetData("Flags", curFlags, true)
 
 			hook.Run("PlayerFlagsTaken", player, flag)
 		end
@@ -2644,11 +2661,7 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 				local clothesItem = player:GetClothesEquipped();
 
 				if clothesItem and clothesItem.group then
-					if clothesItem.genderless then
-						model = "models/begotten/"..clothesItem.group..".mdl";
-					else
-						model = "models/begotten/"..clothesItem.group.."_"..string.lower(player:GetGender())..".mdl";
-					end
+					model = Clockwork.item:GetClothesModel(clothesItem, player:GetGender());
 				else
 					local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 					local factionTable = Clockwork.faction:FindByID(faction);
@@ -2671,6 +2684,11 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 						end
 					end
 				end
+
+				local isValidModel = (Clockwork.item.IsValidModelCached and Clockwork.item:IsValidModelCached(model)) or (item.IsValidModelCached and item.IsValidModelCached(model)) or util.IsValidModel(model);
+				if not isValidModel then
+					model = "models/begotten/wanderers/wanderer_male.mdl";
+				end;
 				
 				ragdoll:SetNW2String("clothes", model);
 			end

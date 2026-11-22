@@ -931,11 +931,7 @@ function PANEL:Init()
 				local item = Clockwork.item:FindByID(clothes.uniqueID, clothes.itemID);
 				
 				if item and item.group then
-					if item.genderless then
-						model = "models/begotten/"..item.group..".mdl";
-					else
-						model = "models/begotten/"..item.group.."_"..string.lower(self.customData.gender)..".mdl";
-					end
+					model = Clockwork.item:GetClothesModel(item, self.customData.gender);
 				end
 			end
 		else

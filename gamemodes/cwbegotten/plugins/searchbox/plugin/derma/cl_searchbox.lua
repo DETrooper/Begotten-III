@@ -1,3 +1,4 @@
+local randomItemMat = Material("begotten/ui/itemrandom2.png");
 local PANEL = {};
 
 function PANEL:Init()
@@ -13,7 +14,7 @@ end
 DEFINE_BASECLASS("DTextEntry");
 function PANEL:Paint(w,h)
 	surface.SetDrawColor(188,188,188);
-	surface.SetMaterial(Material("begotten/ui/itemrandom2.png"));
+	surface.SetMaterial(randomItemMat);
 	surface.DrawTexturedRect(0,0,w,h);
 	BaseClass.Paint(self,w,h);
 

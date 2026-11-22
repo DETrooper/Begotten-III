@@ -89,7 +89,10 @@ function playerMeta:HandleSanity(amount)
 		player.moonCooldown = CurTime() + 125;
 	end
 
-	self:SetNetVar("sanity", newSanity);
+	local roundedSanity = math.Round(newSanity);
+	if (self:GetNetVar("sanity") != roundedSanity) then
+		self:SetNetVar("sanity", roundedSanity);
+	end;
 	self:SetCharacterData("sanity", newSanity)
 end
 

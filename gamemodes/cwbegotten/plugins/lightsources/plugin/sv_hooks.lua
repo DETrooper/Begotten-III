@@ -8,27 +8,35 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 	
 	if !activeWeapon:IsValid() then return end;
 	
+	local isHoldingLantern = (activeWeapon:GetClass() == "cw_lantern");
 	local lanternOnHip = player:GetNetVar("lanternOnHip");
 
-	if lanternOnHip and (!player:HasWeapon("cw_lantern") or activeWeapon:GetClass() == "cw_lantern") then
+	if lanternOnHip and (isHoldingLantern or !player:HasWeapon("cw_lantern")) then
 		player:SetNetVar("lanternOnHip", false);
 		lanternOnHip = false;
 	end
 
-	if !plyTab.nextLanternBurn then plyTab.nextLanternBurn = curTime + math.random(60, 120); end
+	if (!lanternOnHip and !isHoldingLantern) then
+		if player:GetNetVar("oil") then
+			player:SetNetVar("oil", nil);
+		end;
+		return;
+	end;
 
-	if (plyTab.nextLanternBurn <= curTime and lanternOnHip and player:GetNetVar("oil", 0) > 20 and !player:GetVelocity():IsZero()) then
-		plyTab.nextLanternBurn = curTime + math.random(60, 120);
+	if lanternOnHip then
+		if !plyTab.nextLanternBurn then plyTab.nextLanternBurn = curTime + math.random(60, 120); end
 
-		if (math.random(0, (player:HasTrait("marked") and 50 or 150)) == 0) then
-			local pronoun = (player:GetGender() == GENDER_FEMALE and "her" or "him");
+		if (plyTab.nextLanternBurn <= curTime and player:GetNetVar("oil", 0) > 20 and !player:GetVelocity():IsZero()) then
+			plyTab.nextLanternBurn = curTime + math.random(60, 120);
 
-			Clockwork.chatBox:AddInTargetRadius(player, "me", "'s lantern spills some oil onto "..pronoun.."self, igniting and setting "..pronoun.." on fire!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-			player:Ignite(5);
+			if (math.random(0, (player:HasTrait("marked") and 50 or 150)) == 0) then
+				local pronoun = (player:GetGender() == GENDER_FEMALE and "her" or "him");
+
+				Clockwork.chatBox:AddInTargetRadius(player, "me", "'s lantern spills some oil onto "..pronoun.."self, igniting and setting "..pronoun.." on fire!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+				player:Ignite(5);
+			end
 		end
-	end
 
-	if (activeWeapon:GetClass() != "cw_lantern" and lanternOnHip) then
 		if (!plyTab.nextOilDrop or curTime > plyTab.nextOilDrop) then
 			local lanternWeapon = player:GetWeapon("cw_lantern");
 
@@ -49,7 +57,7 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 		return;
 	end
 
-	if activeWeapon:GetClass() == "cw_lantern" then
+	if isHoldingLantern then
 		local weaponItemTable = item.GetByWeapon(activeWeapon);
 		
 		if weaponItemTable then

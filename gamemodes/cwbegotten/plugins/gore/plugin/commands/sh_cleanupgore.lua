@@ -60,6 +60,10 @@ function COMMAND:OnRun(player, arguments)
 		end;
 	end;
 	
+	if (SERVER) then
+		net.Start("cwClearClientGibs"); net.Broadcast();
+	end;
+
 	if (arguments[1]) then
 		for _, v in _player.Iterator() do
 			v:ConCommand("r_cleardecals");

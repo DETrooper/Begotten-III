@@ -10,6 +10,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS);
 	self:SetSolid(SOLID_VPHYSICS);
 	self:CreateBoneFollowers();
+	self:UpdateBoneFollowers();
 	self.isTrainingDummy = true;
 	local physicsObject = self:GetPhysicsObject();
 	if (IsValid(physicsObject)) then
@@ -22,9 +23,20 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS;
 end;function ENT:Use(activator, caller)	if IsValid(caller) and caller:IsPlayer() then		netstream.Start(caller, "OpenDummyMenu", self);	endend
 function ENT:Think()
+	if self.nextBoneFollowerUpdate and CurTime() < self.nextBoneFollowerUpdate then
+		self:UpdateBoneFollowers();
+		self:NextThink(CurTime() + 0.1);
+		return true;
+	end;
+
 	self:UpdateBoneFollowers();
+	self:NextThink(CurTime() + 5);
+	return true;
 end
 function ENT:OnTakeDamage(damageInfo)
+	self.nextBoneFollowerUpdate = CurTime() + 1.0;
+	self:NextThink(CurTime());
+
 	local player = damageInfo:GetAttacker();
 	if IsValid(player) and player:IsPlayer() and player:Alive() then		local hitGroup = Clockwork.kernel:GetRagdollHitGroup(self, damageInfo:GetDamagePosition());				if cwMedicalSystem then			hitGroup = cwMedicalSystem.cwHitGroupToString[hitGroup];		end	
 		Clockwork.chatBox:Add(player, nil, "itnofake", "You hit the training dummy in the "..hitGroup.." for "..tostring(damageInfo:GetDamage() or 0).." damage!");

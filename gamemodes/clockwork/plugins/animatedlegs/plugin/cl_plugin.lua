@@ -113,11 +113,7 @@ function cwAnimatedLegs:CreateLegs()
 		local clothesItem = Clockwork.Client:GetClothesEquipped();
 		
 		if clothesItem and clothesItem.group then
-			if clothesItem.genderless then
-				model = "models/begotten/"..clothesItem.group..".mdl";
-			else
-				model = "models/begotten/"..clothesItem.group.."_"..string.lower(Clockwork.Client:GetGender())..".mdl"
-			end
+			model = Clockwork.item:GetClothesModel(clothesItem, Clockwork.Client:GetGender());
 		else
 			local faction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 			local factionTable = Clockwork.faction:FindByID(faction);

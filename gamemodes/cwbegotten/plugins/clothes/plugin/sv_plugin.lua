@@ -7,6 +7,8 @@
 
 local playerMeta = FindMetaTable("Player")
 
+local ARMOR_DAMAGE_TYPES = {DMG_BULLET, DMG_BUCKSHOT, DMG_CLUB, DMG_FALL, DMG_SLASH, DMG_VEHICLE};
+
 function PLUGIN:PlayerThink(player, curTime)
 	player.hitThisTick = false;
 end
@@ -109,7 +111,6 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 	
 	if ((player:IsPlayer() or player.isTrainingDummy or (player:IsNextBot() and player.Armor)) and attacker and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot())) then
 		local damageType = damageInfo:GetDamageType();
-		local damageTypes = {DMG_BULLET, DMG_BUCKSHOT, DMG_CLUB, DMG_FALL, DMG_SLASH, DMG_VEHICLE};
 		
 		if !damagePosition then
 			damagePosition = damageInfo:GetDamagePosition() or Vector(0, 0, 0);
@@ -127,14 +128,16 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			end
 		end
 		
-		for i = 1, #damageTypes do
-			if damageInfo:IsDamageType(damageTypes[i]) then
-				damageType = damageTypes[i];
+		local bValidDamageType = false;
+		for i = 1, #ARMOR_DAMAGE_TYPES do
+			if damageInfo:IsDamageType(ARMOR_DAMAGE_TYPES[i]) then
+				damageType = ARMOR_DAMAGE_TYPES[i];
+				bValidDamageType = true;
 				break;
 			end
 		end
 
-		if !table.HasValue(damageTypes, damageType) then
+		if !bValidDamageType then
 			return;
 		end
 		
