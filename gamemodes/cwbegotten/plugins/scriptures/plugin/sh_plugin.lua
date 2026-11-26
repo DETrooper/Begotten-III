@@ -590,7 +590,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.uniqueID = "book_shagalax"
 	ITEM.description = "A runic stone of the North. It has foreign text carved into it."
 	ITEM.background = "https://i.imgur.com/1rRASI3.png"
-	ITEM.bookInformation = {Book_Shagalax_Page1, Book_Shagalax_Page2, Book_Shagalax_Page3, Book_Shagalax_Page4, Book_Shagalax_Page5, Book_Shagalax_Page6}
+	ITEM.bookInformation = {Book_Shagalax_Page1, Book_Shagalax_Page2, Book_Shagalax_Page3, Book_Shagalax_Page4, Book_Shagalax_Page5, Book_Shagalax_Page6, Book_Shagalax_Page7}
 	ITEM.bookType = "Goreic"
 	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
 	

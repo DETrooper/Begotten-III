@@ -428,6 +428,13 @@ function cwRituals:PlayerCharacterLoaded(player)
 		player:SetNetVar("kinisgerOverrideSubfaction", nil);
 	end
 	
+	if player.cwKeepRituals then
+		player.cwKeepRituals = nil;
+		netstream.Start(player, "LoadRitualBinds", player:GetCharacterData("BoundRitualsNew", {}));
+		
+		return;
+	end
+	
 	if timer.Exists("auraMotherTimer_"..entIndex) then
 		timer.Remove("auraMotherTimer_"..entIndex);
 		

@@ -49,7 +49,7 @@ end;
 
 -- A function to populate the panel.
 function PANEL:Populate()
-	self.panelList:Clear();
+	self.panelList:Clear(true);
 	
 	local textEntry = vgui.Create("DTextEntry");
 	local button = vgui.Create("DButton");

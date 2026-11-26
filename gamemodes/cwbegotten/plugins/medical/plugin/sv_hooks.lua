@@ -373,8 +373,10 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 													if diseaseTable.deathChance then
 														local deathChance = diseaseTable.deathChance;
 														
-														if cwBeliefs and player:HasBelief("favored") then
-															deathChance = math.Round(deathChance / 2);
+														if deathChance < 100 then
+															if cwBeliefs and player:HasBelief("favored") then
+																deathChance = math.Round(deathChance / 2);
+															end
 														end
 														
 														if math.random(1, 100) <= deathChance then

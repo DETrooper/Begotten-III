@@ -119,7 +119,7 @@ end;
 
 -- A function to rebuild the panel.
 function PANEL:Rebuild()
-	self.inventoryList:Clear();
+	self.inventoryList:Clear(true);
 	
 	if self.equipmentIconList then
 		for k, v in pairs(self.equipmentIconList) do

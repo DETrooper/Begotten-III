@@ -38,7 +38,7 @@ end;
 
 -- A function to rebuild the panel.
 function PANEL:Rebuild()
-	self.panelList:Clear();
+	self.panelList:Clear(true);
 	
 	local miscellaneous = {};
 	local categories = {};

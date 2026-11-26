@@ -51,7 +51,7 @@ end;
 function PANEL:Populate(text)
 	local colorWhite = Clockwork.option:GetColor("white");
 	
-	self.panelList:Clear();
+	self.panelList:Clear(true);
 	self.label = vgui.Create("DLabel");
 	
 	self.label:SetAutoStretchVertical(true);

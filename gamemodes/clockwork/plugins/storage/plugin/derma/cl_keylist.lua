@@ -56,7 +56,7 @@ end;
 
 -- A function to populate the panel.
 function PANEL:Populate(itemTable)
-	self.panelList:Clear();
+	self.panelList:Clear(true);
 
 	local inventory = Clockwork.inventory:GetClient();
 	local inventoryList = Clockwork.inventory:GetAsItemsList(inventory);

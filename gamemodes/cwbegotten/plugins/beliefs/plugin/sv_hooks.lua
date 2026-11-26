@@ -1220,14 +1220,12 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 							local sanity = entity:Sanity();
 							
 							if sanity <= 90 then
-								if sanity <= 10 then
-									newDamage = newDamage + (originalDamage * 0.70);
-								else
-									local modifier = 90 - (sanity + 10);
-									local bonus = 0.01 * modifier;
-									
-									newDamage = newDamage + (originalDamage * bonus);
-								end
+								local modifier = 10 + ((90 - sanity) * 0.75);
+								modifier = math.min(70, modifier);
+
+								local bonus = 0.01 * modifier;
+
+								newDamage = newDamage + (originalDamage * bonus);
 							end
 						end
 					end

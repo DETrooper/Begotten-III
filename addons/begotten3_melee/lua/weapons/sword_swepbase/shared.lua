@@ -1422,7 +1422,7 @@ end
 					end
 				elseif weapon.BluntAltAttack == true then
 					damagetype = 128
-					if hit:IsValid() then
+					if hit:IsValid() and !hit:GetNetVar("Guardening") then
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
 							if hit:IsPlayer() then
 								hit:TakeStability(((stabilitydamage * 0.5) * shield_reduction * hit_reduction) * GetStabilityModifier(self.Owner));
@@ -1431,7 +1431,7 @@ end
 					end
 				elseif weapon.ChoppingAltAttack == true then
 					damagetype = 4
-					if hit:IsValid() then
+					if hit:IsValid() and !hit:GetNetVar("Guardening") then
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
 							if hit:IsPlayer() then
 								hit:TakeStability(stabilitydamage * GetStabilityModifier(self.Owner));
@@ -1440,7 +1440,7 @@ end
 					end
 				elseif weapon.PummelingAltAttack == true then
 					damagetype = 128
-					if hit:IsValid() then
+					if hit:IsValid() and !hit:GetNetVar("Guardening") then
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
 							if hit:IsPlayer() then
 								hit:TakeStability(stabilitydamage * GetStabilityModifier(self.Owner));

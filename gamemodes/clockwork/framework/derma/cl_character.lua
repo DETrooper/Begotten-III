@@ -3897,8 +3897,8 @@ function PANEL:Init()
 					
 					self.informationForm:SetName(button.subfaction);
 					
-					self.subfactionDescriptionList:Clear();
-					self.subfactionAttributesList:Clear();
+					self.subfactionDescriptionList:Clear(true);
+					self.subfactionAttributesList:Clear(true);
 					
 					if factionTable.subfactions[i].subtitle then
 						local subfactionSubtitleText = vgui.Create("DTextEntry", self.subfactionDescriptionList);

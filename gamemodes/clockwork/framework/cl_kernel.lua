@@ -2949,7 +2949,9 @@ do
 			cache[id] = info
 		end
 
-		surface.DrawPoly(info)
+		if (#info >= 3) then
+			surface.DrawPoly(info)
+		end
 	end
 
 	function surface.DrawOutlinedCircle(x, y, radius, thickness, passes)

@@ -435,7 +435,7 @@ ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 ITEM.insulation = 35;
 
-ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "gold_ingot", "fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
+ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "fine_steel_chunks", "fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

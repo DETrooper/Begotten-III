@@ -22,6 +22,8 @@ function COMMAND:OnRun(player, arguments)
 		end
 
 		if (removed > 0) then
+			cwMapScene:SaveMapScenes();
+		
 			if (removed == 1) then
 				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have removed "..removed.." map scene.")
 			else

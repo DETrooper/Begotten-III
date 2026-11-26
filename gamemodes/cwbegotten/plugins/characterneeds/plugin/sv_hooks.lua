@@ -199,6 +199,10 @@ end;
 -- Called when a player uses an item.
 function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 	if itemTable.needs then
+		if cwBeliefs and player:HasBelief("yellow_and_black") then
+			return;
+		end
+		
 		local subfaction = player:GetSubfaction();
 	
 		for k, v in pairs(itemTable.needs) do
